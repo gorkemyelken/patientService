@@ -7,17 +7,16 @@ import lombok.NoArgsConstructor;
 
 @Entity
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
+@Table(name = "identifiers")
 public class Identifier {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String type; // e.g., "TCKN", "Passport"
-    private String value;
+    @Column(nullable = false)
+    private String identifierType;
 
-    @ManyToOne
-    @JoinColumn(name = "patient_id")
-    private Patient patient;
+    @Column(nullable = false)
+    private String identifierValue;
 }

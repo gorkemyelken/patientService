@@ -7,16 +7,15 @@ import lombok.NoArgsConstructor;
 
 @Entity
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
+@Table(name = "notification_preferences")
 public class NotificationPreference {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String type; // e.g., "SMS", "Email", "None"
+    @Column(nullable = false)
+    private String notificationType; // SMS, email, vs.
 
-    @ManyToOne
-    @JoinColumn(name = "patient_id")
-    private Patient patient;
+    // getters and setters
 }

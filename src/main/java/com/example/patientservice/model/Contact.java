@@ -1,14 +1,22 @@
 package com.example.patientservice.model;
 
-import jakarta.persistence.Embeddable;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Embeddable
+@Entity
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
+@Table(name = "contacts")
 public class Contact {
-    private String type; // e.g., "phone", "email
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(nullable = false)
+    private String contactType;
+
+    @Column(nullable = false)
+    private String contactValue;
 }

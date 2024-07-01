@@ -1,44 +1,42 @@
 package com.example.patientservice.model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
-import java.util.Date;
+
 import java.util.List;
 
 @Entity
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
+@Table(name = "patients")
 public class Patient {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false)
     private String firstName;
+
     private String lastName;
-    private Date birthDate;
+
+    @Column(nullable = false)
     private String gender;
 
-    @OneToMany(mappedBy = "patient", cascade = CascadeType.ALL)
-    private List<Identifier> identifiers; // TCKN, Passport number, etc.
+    @Column(nullable = false)
+    private String birthDate;
 
-    @ElementCollection
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "patient_id", referencedColumnName = "id")
+    private List<Identifier> identifiers;
+
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "patient_id", referencedColumnName = "id")
     private List<Contact> contacts;
 
-    @OneToMany(mappedBy = "patient", cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "patient_id", referencedColumnName = "id")
     private List<NotificationPreference> notificationPreferences;
 
-    private Integer version;
-
-    @PrePersist
-    @PreUpdate
-    public void incrementVersion() {
-        if (this.version == null) {
-            this.version = 1;
-        } else {
-            this.version++;
-        }
-    }
+    @Version
+    private Integer versionNumber;
 }
