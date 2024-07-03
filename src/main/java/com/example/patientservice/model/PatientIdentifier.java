@@ -3,18 +3,20 @@ package com.example.patientservice.model;
 import jakarta.persistence.*;
 import lombok.Data;
 
-@Entity
 @Data
-@Table(name = "identifiers")
-public class Identifier {
+@Entity
+@Table(name = "patient_identifiers")
+public class PatientIdentifier {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long identifierId;
 
-    @Column(nullable = false)
     private String identifierType;
 
-    @Column(nullable = false)
     private String identifierValue;
+
+    @ManyToOne
+    @JoinColumn(name = "patient_id")
+    private Patient patient;
 }

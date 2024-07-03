@@ -3,40 +3,34 @@ package com.example.patientservice.model;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.util.Date;
 import java.util.List;
 
-@Entity
 @Data
+@Entity
 @Table(name = "patients")
 public class Patient {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long patientId;
 
-    @Column(nullable = false)
-    private String firstName;
+    @Temporal(TemporalType.DATE)
+    private Date birthDate;
 
-    private String lastName;
-
-    @Column(nullable = false)
     private String gender;
 
-    @Column(nullable = false)
-    private String birthDate;
+    private Integer version;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "patient_id", referencedColumnName = "id")
-    private List<Identifier> identifiers;
+    @OneToMany(mappedBy = "patient", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<PatientName> names;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "patient_id", referencedColumnName = "id")
-    private List<Contact> contacts;
+    @OneToMany(mappedBy = "patient", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<PatientIdentifier> identifiers;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "patient_id", referencedColumnName = "id")
-    private List<NotificationPreference> notificationPreferences;
+    @OneToMany(mappedBy = "patient", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<PatientContact> contacts;
 
-    @Version
-    private Integer versionNumber;
+    @OneToOne(mappedBy = "patient", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private PatientNotificationPreference notificationPreference;
 }

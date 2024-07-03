@@ -6,31 +6,23 @@ import lombok.Data;
 import java.time.LocalDateTime;
 import java.util.Date;
 
-@Entity
 @Data
+@Entity
 @Table(name = "patient_history")
 public class PatientHistory {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long historyId;
 
     @ManyToOne
     @JoinColumn(name = "patient_id")
     private Patient patient;
 
-    @Column(name = "field_name")
-    private String fieldName;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date changeDate;
 
-    @Column(name = "previous_value")
-    private String previousValue;
+    private String changeDetails;
 
-    @Column(name = "new_value")
-    private String newValue;
-
-    @Column(name = "version_number")
-    private Integer versionNumber;
-
-    @Column(name = "updated_at")
-    private LocalDateTime updatedAt;
+    private Integer version;
 }

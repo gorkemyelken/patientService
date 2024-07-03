@@ -1,22 +1,22 @@
 package com.example.patientservice.model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
-@Entity
 @Data
-@Table(name = "contacts")
-public class Contact {
+@Entity
+@Table(name = "patient_contacts")
+public class PatientContact {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long contactId;
 
-    @Column(nullable = false)
     private String contactType;
 
-    @Column(nullable = false)
     private String contactValue;
+
+    @ManyToOne
+    @JoinColumn(name = "patient_id")
+    private Patient patient;
 }
